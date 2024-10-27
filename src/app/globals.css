@@ -1,0 +1,567 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #282a36;
+  --background-button-right-side: #383e48;
+  --foreground: #ededed;
+  --background-tag: rgb(75 79 101);
+  --background-chapter: rgb(52 55 70);
+  --color-pink-purple: rgb(161 121 192);
+  --background-grey: rgb(47 51 59);
+  --background-tags: rgb(40 42 54);
+  --background-tags-hover: rgb(47 51 59);
+  --background-hover: rgb(66 70 91);
+  --background-light-purple: rgb(123 93 147 / 20%);
+  --color-pink-purple-danger: rgb(93 57 69);
+  --background-light-green: rgb(53 65 72);
+  --color-purple: rgb(216 159 255);
+  --color-green: rgb(80 250 123);
+  --color-red: rgb(229 64 64);
+  --text-gray: rgb(126 144 172);
+  --text-color: #fff --box-border-radius: 0.25rem;
+  --sidebar-background: #343746;
+  --navbar-height: 3.5rem;
+  --padding-button: .45rem 3rem;
+}
+
+/* ! Theo màu của hệ điều hành User */
+/* @media (prefers-color-scheme: dark) { 
+  :root {
+    --background: #282a36;
+    --foreground: #ededed;
+  }
+} */
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.mark-over {
+  font-weight: 400;
+  background-color: var(--background-tag);
+  width: fit-content;
+  border-radius: var(--box-border-radius);
+  padding: 0.125rem 0.5rem;
+
+}
+
+
+/* Transition sidebar transform */
+.sidebar {
+  /* transition: transform 0.3s ease-in-out; */
+  width: 256px;
+  /* Ban đầu Sidebar có width = 0 */
+  transition: width 0.5s ease-in-out, opacity 1s ease-in-out;
+  /* transition: opacity 1s ease-in-out;  */
+  /* background-color: #333; */
+  /* color: white; */
+}
+
+.sidebar-hidden {
+  /* transform: translateX(-100%); */
+  opacity: 0;
+  width: 0;
+}
+
+.right-side {
+  /* transition: width 0.3s ease-in-out; */
+}
+
+
+.sidebar-navigate {
+  font-weight: 600;
+}
+
+.side-list-item {
+  margin-top: 1rem;
+}
+
+.sidebar-navigate-icon {
+  margin-right: 4px;
+}
+
+/*! Nav bar  */
+.search-bar-navbar {
+  /* border: 1px var(--color-pink-purple) solid; */
+  transition: width 0.2s ease-in-out, opacity 1s ease-in-out
+}
+.search-bar-navbar:focus-within {
+  outline: 1px var(--color-purple) solid;
+}
+
+.navbar-search-input::placeholder {
+  color: white;
+}
+
+.glass {
+  background: rgba(104, 104, 104, 0.2);
+  box-shadow:-7px -2px 60px 6px rgb(201 140 230 / 30%);
+  backdrop-filter: blur(0.1px);
+}
+
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-10 {
+  opacity: 0.1;
+}
+
+.opacity-25 {
+  opacity: 0.25;
+}
+
+.opacity-40 {
+  opacity: 0.4;
+}
+
+.opacity-7 {
+  opacity: 0.7;
+}
+
+.opacity-90 {
+  opacity: 0.90;
+}
+
+.opacity-full {
+  opacity: 1;
+}
+
+/*! Modal */
+
+.modal {
+  display: block;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 40;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100vw;
+  /* Full width */
+  height: 100vh;
+  /* Full height */
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.bg-modal-user {
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* ! Modal Select group */
+
+#select-group-modal {
+  display: block;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 55;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+}
+
+.select-group-modal-content {
+  background-color: var(--background);
+  position: fixed;
+  /* ! Vị trí là bắt đầu ở 50% chiều rộng và chiều cao */
+  top: 50%;
+  left: 50%;
+  z-index: 70;
+  margin: 0;
+  /* Loại bỏ margin để tránh ảnh hưởng đến vị trí */
+  padding: 20px;
+  /* ! Dịch chuyển modal lại 50% chiều rộng và chiều cao của chính nó để căn giữa */
+  transform: translate(-50%, -50%);
+  border-radius: 4px;
+}
+
+.item-list-group {
+  background-color: var(--background-chapter);
+  border-left: 2px #8be8fc solid;
+}
+
+/* ! Sidebar right */
+
+.sidebar-right {
+  border: 1px var(--color-pink-purple) solid;
+  z-index: 100;
+}
+
+.button-sidebar-right {
+  background-color: var(--background-button-right-side);
+}
+
+.center-children {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ! For Slick */
+
+
+.slick-dots li.slick-active button:before {
+  color: var(--color-pink-purple) !important;
+  font-size: 8px;
+}
+
+
+.item-recently-added {
+  padding: 10px;
+}
+
+.cover-item-recently-added,
+.detail-cover-item-recently-added {
+  display: none;
+}
+
+.item-recently-added:hover .cover-item-recently-added {
+  display: block;
+}
+
+.item-recently-added:hover .detail-cover-item-recently-added {
+  display: flex;
+}
+
+/*  */
+.homepage-body {
+  box-shadow: 0px -43px 64px 89px #282a36;
+}
+
+/* ! Login page */
+.checkbox-login .peer::before {
+  background: transparent !important;
+}
+
+/* ! Title page */
+
+.option-for-list {
+  display: flex;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: var(--background-chapter);
+}
+
+.option-detail {
+  z-index: 1;
+  padding: 10px;
+}
+
+/* .option-active {
+  border-radius: 4px;
+  background-color: var(--background-tag);
+} */
+
+.slider-option {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  position: absolute;
+  top: 0;
+  /* left: 0; */
+  background-color: var(--background-tag);
+  border-radius: 4px;
+  transition: transform 0.05s ease;
+}
+
+/* Hiệu ứng rung rinh */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-2px);
+  }
+
+  50% {
+    transform: translateX(2px);
+  }
+
+  75% {
+    transform: translateX(-2px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.shake {
+  animation: shake 0.05s ease;
+}
+
+/* list-manga-update */
+.list-manga-update {
+  margin-top: 24px;
+}
+
+.item-list-manga-update {
+  display: flex;
+  margin-bottom: 14px;
+  gap: 8px;
+  padding: 8px;
+  background-color: var(--background-chapter);
+  border-radius: 4px;
+}
+
+.item-update-by-listchap {
+  margin-bottom: 14px;
+  padding: 8px;
+  background-color: var(--background-chapter);
+  border-radius: 4px;
+}
+
+/* Recently Added */
+
+.tag-recently-added {
+  text-transform: uppercase;
+  font-size: 10px;
+  background-color: var(--background-tag);
+  height: 15px;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.rating-recently-added {
+  font-size: 14px;
+}
+
+.status-recently-added {
+  font-size: 12px;
+}
+
+.manga-update-name-cover {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
+
+}
+
+.text-wrap {
+  word-wrap: break-word;
+  /* Tự động ngắt dòng nếu quá dài */
+  overflow-wrap: break-word;
+  /* Tự động ngắt từ khi cần */
+  white-space: normal;
+  /* Đảm bảo văn bản có thể xuống dòng */
+}
+
+/* Search bar */
+.search-bar-input {
+  padding: var(--padding-button);
+}
+
+/* ! focus bên trong div */
+.search-bar-input:focus-within {
+  outline: 1px var(--color-purple) solid;
+}
+
+.input-advanced-search {
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.input-advanced-search::placeholder {
+  color: white;
+}
+
+.input-advanced-search:focus {
+  outline: none;
+}
+.input-search-tags:focus {
+  outline: none;
+}
+.input-search-tags {
+  font-size: 16px;
+  line-height: 25px;
+}
+
+.input-search-tags::placeholder {
+  color: rgb(149 156 168);
+}
+.input-puclic-year:focus {
+  outline: none;
+}
+.input-puclic-year {
+  font-size: 16px;
+  line-height: 25px;
+  color: white;
+  font-weight: 700;
+  background-color: var(--sidebar-background);
+}
+
+.input-puclic-year::placeholder {
+  color: white;
+  font-weight: 700;
+}
+
+.container-search-tags:focus-within {
+  outline: 1px var(--color-purple) solid;
+}
+
+.clear-input-button {
+  background-color: var(--color-purple);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* dropdown filter option list */
+.dropdown-filter-option-list {
+  padding: 8px 12px;
+}
+
+
+.dropdown-filter-option-item {
+  padding: 4px 22px;
+  color: var(--text-gray);
+}
+
+.dropdown-checkbox-option-item {
+  padding: 4px 10px;
+  color: var(--text-gray);
+}
+
+.dropdown-checkbox-option-item:hover {
+  color: white;
+  background-color: var(--background-hover);
+}
+
+.dropdown-checkbox-option-item:hover .checkbox-box {
+  border-color: white;
+}
+
+.selected-checkbox {
+  color: var(--color-purple) !important;
+  /* background-color: var(--background-light-purple) !important; */
+}
+.selected-checkbox:hover {
+  /* color: var(--color-purple) !important; */
+  background-color: var(--background-light-purple) !important;
+}
+
+.selected-checkbox .checkbox-box{
+  border: none;
+  background-color: var(--color-purple) !important;
+
+}
+
+
+
+.selected {
+  position: relative;
+  color: var(--color-purple) !important;
+}
+
+.selected::after {
+  content: "";
+  background-color: var(--color-purple);
+  width: 2px;
+  height: 14px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.selected:hover {
+  background-color: var(--background-light-purple) !important;
+}
+
+.input-selected-option {
+  
+}
+/* 
+.input-selected-option:focus-within {
+  outline: 1px var(--color-purple) solid;
+} */
+
+.item-filter:focus-within .input-selected-option {
+  outline: 1px var(--color-pink-purple) solid;
+}
+
+/* Tag list */
+.list-tag {
+ display: flex;
+ gap: 6px;
+ flex-wrap: wrap;
+}
+
+.item-tag {
+  font-size: 12px;
+  padding: 2px 8px;
+  background-color: var(--background-tags);
+  width: fit-content;
+  border-radius: 6px;
+  transition: color 0.5s, outline 0.5s, background-color 0.5s;
+}
+
+.include {
+  background-color: var(--background-light-green);
+  outline: 1px var(--color-green) solid;
+  color: var(--color-green);
+}
+
+.exclude {
+  background-color: var(--background-light-green);
+  outline: 1px var(--color-red) dashed;
+  color: var(--color-red);
+}
+
+
+.change-year {
+  /* background-color: var(--color-purple); */
+  padding: 0 2px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.change-year:hover {
+  color: var(--color-pink-purple); 
+  border-radius: 6px;
+  cursor: pointer;
+}

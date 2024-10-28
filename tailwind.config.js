@@ -20,6 +20,7 @@ module.exports = withMT({
     },
     screens: {
       'tablet': '640px',
+      'for-auth-page': '850px',
       'laptop': '1024px',
       'desktop': '1280px',
       'largepc': '1600px'

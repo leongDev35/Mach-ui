@@ -21,7 +21,7 @@ export default function SearchBar() {
   const [switchDropdownAuthors, setSwitchDropdownAuthors] = useState(false)
   const [switchDropdownArtists, setSwitchDropdownArtists] = useState(false)
   const [switchDropdownHasTranslateChapter, setSwitchDropdownHasTranslateChapter] = useState(false)
-  const [publicYear, setPublicYear] = useState(null)
+  const [publicYear, setPublicYear] = useState('')
   const dropdownRef = useRef(null);
   const dropdownFilterTagsRef = useRef(null);
   const dropdownCheckboxFilterRef = useRef(null);

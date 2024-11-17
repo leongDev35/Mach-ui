@@ -1,5 +1,9 @@
+import { useDispatch, useSelector } from "react-redux";
 import LogoAndName from "../common/LogoAndName";
 import { useState, useEffect } from 'react';
+import { useRouter } from "next/navigation";
+import { logout } from "@/redux/user/userSlice";
+import Image from "next/image";
 export default function Navbar({ toggleSidebar, isSidebarOpen, isOpenSidebarRight }) {
 
     const [isScrolled, setIsScrolled] = useState(false);
@@ -9,9 +13,30 @@ export default function Navbar({ toggleSidebar, isSidebarOpen, isOpenSidebarRigh
     const [isOpacityFullModalUser, setIsOpacityFullModalUser] = useState(false);
     const [typeSearch, setTypeSearch] = useState('');
 
+    const dispatch = useDispatch();
+    const router = useRouter();
+    let user = useSelector(({ users }) => {
+            return users.user
+    })
+
+    
+    if (!user) {
+        user = {
+            fullname: 'Guest',
+            avatarUrl: '/guest-ava.png',
+            isGuest: true
+        }
+    }
+    console.log(user);
+    
+    const handleLogout = () => {
+        dispatch(logout());
+        // router.push('/login'); // Chuyển hướng đến trang đăng nhập sau khi logout
+    };
+
     const clearInput = (setInputFunc) => {
         setInputFunc(''); // Xóa giá trị
-      };
+    };
     // Hàm mở modal
     const openModal = () => {
         setIsOpenModal(true);
@@ -21,7 +46,6 @@ export default function Navbar({ toggleSidebar, isSidebarOpen, isOpenSidebarRigh
     // Hàm đóng modal
     const closeModal = () => {
         setIsOpenModal(false);
-
     };
 
     // Hàm mở modal
@@ -35,9 +59,7 @@ export default function Navbar({ toggleSidebar, isSidebarOpen, isOpenSidebarRigh
     // Hàm đóng modal
     const closeModalUser = () => {
         setIsOpenModalUser(false);
-
         setIsOpacityFullModalUser(false);
-
     };
 
     // Đóng modal khi nhấp bên ngoài modal
@@ -132,51 +154,81 @@ export default function Navbar({ toggleSidebar, isSidebarOpen, isOpenSidebarRigh
                             </div>
                         }
                         <div className="relative" >
-                            <div className="avatar-navbar w-10 h-10 bg-slate-500 rounded-full ml-4 " onClick={openModalUser}></div>
-                            <div id="modal-user" className={`modal-user  ${isOpenModalUser ? 'blocka text-white w-[299px] h-[753px] p-[24px] rounded bg-[--sidebar-background] absolute right-0 top-14 z-50' : 'hidden'} bg-modal-user ${isOpacityFullModalUser ? 'opacity-full' : 'opacity-10'} `}>
+                            <div className="avatar-navbar w-10 h-10 bg-slate-500 rounded-full ml-4 overflow-hidden cursor-pointer" onClick={openModalUser}>
+                                <Image className=""
+                                    src={user.avatarUrl}
+                                    alt="Picture of the author"
+                                    width={500}
+                                    height={500}
+                                />
+                            </div>
+                            <div id="modal-user" className={`modal-user  ${isOpenModalUser ? 'block text-white w-[299px] h-[753px] p-[24px] rounded bg-[--sidebar-background] absolute right-0 top-14 z-50' : 'hidden'} bg-modal-user ${isOpacityFullModalUser ? 'opacity-full' : 'opacity-10'} `}>
                                 <div className="top-modal-user flex items-center flex-col gap-1">
-                                    <div className="avatar-image w-[64px] h-[64px] bg-white rounded-full"></div>
+                                    <div className="avatar-image w-[64px] h-[64px] bg-white rounded-full overflow-hidden cursor-pointer">
+                                        <Image className=""
+                                            src={user.avatarUrl}
+                                            alt="Picture of the author"
+                                            width={500}
+                                            height={500}
+                                        />
+                                    </div>
                                     <div className="user-name text-lg font-bold">
-                                        mach0jc0d0n
+                                        {user.fullname}
                                     </div>
                                     <div className="role">User</div>
                                 </div>
-                                <hr className="my-3" />
-                                <div className="list-of-me font-medium tracking-wider">
-                                    <div className="item-of-me flex px-3 py-2">
-                                        <div className="logo-item-of-me">
-                                            <svg data-v-9ba4cb7e="" data-v-c1e70143="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m8-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8"></path></svg>
-                                        </div>
-                                        <div className="title-item-of-me"> My Profile</div>
-                                    </div>
-                                    <div className="item-of-me flex px-3 py-2">
-                                        <div className="logo-item-of-me">
-                                            <svg data-v-9ba4cb7e="" data-v-c1e70143="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                                        </div>
-                                        <div className="title-item-of-me"> My Follows</div>
-                                    </div>
-                                    <div className="item-of-me flex px-3 py-2">
-                                        <div className="logo-item-of-me">
-                                            <svg data-v-9ba4cb7e="" data-v-c1e70143="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg>
-                                        </div>
-                                        <div className="title-item-of-me"> My Lists</div>
-                                    </div>
-                                    <div className="item-of-me flex px-3 py-2">
-                                        <div className="logo-item-of-me">
-                                            <svg data-v-9ba4cb7e="" data-v-c1e70143="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2m8-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8m14 10v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"></path></svg>
-                                        </div>
-                                        <div className="title-item-of-me"> My Groups</div>
-                                    </div>
-                                </div>
-                                <hr className="my-3" />
+                                {user.isGuest ? <>
+                                    <hr className="my-3" />
                                 <div className="bottom-modal-user">
-                                    <div className="sign-out-div flex px-3 py-2 text-lg items-center">
+                                    <div className="sign-out-div flex px-3 py-2 text-lg items-center cursor-pointer" onClick={()=>{
+                                        router.push('/login');
+                                    }}>
                                         <div>
                                             <svg data-v-9ba4cb7e="" data-v-5866404a="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 14 5-5-5-5m5 5H9"></path></svg>
                                         </div>
-                                        <div >Sign Out</div>
+                                        <div >Log In</div>
                                     </div>
                                 </div>
+                                </> : <>
+                                    <hr className="my-3" />
+                                    <div className="list-of-me font-medium tracking-wider">
+                                        <div className="item-of-me flex px-3 py-2">
+                                            <div className="logo-item-of-me">
+                                                <svg data-v-9ba4cb7e="" data-v-c1e70143="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m8-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8"></path></svg>
+                                            </div>
+                                            <div className="title-item-of-me"> My Profile</div>
+                                        </div>
+                                        <div className="item-of-me flex px-3 py-2">
+                                            <div className="logo-item-of-me">
+                                                <svg data-v-9ba4cb7e="" data-v-c1e70143="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                            </div>
+                                            <div className="title-item-of-me"> My Follows</div>
+                                        </div>
+                                        <div className="item-of-me flex px-3 py-2">
+                                            <div className="logo-item-of-me">
+                                                <svg data-v-9ba4cb7e="" data-v-c1e70143="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg>
+                                            </div>
+                                            <div className="title-item-of-me"> My Lists</div>
+                                        </div>
+                                        <div className="item-of-me flex px-3 py-2">
+                                            <div className="logo-item-of-me">
+                                                <svg data-v-9ba4cb7e="" data-v-c1e70143="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2m8-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8m14 10v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"></path></svg>
+                                            </div>
+                                            <div className="title-item-of-me"> My Groups</div>
+                                        </div>
+                                    </div>
+                                    <hr className="my-3" />
+                                    <div className="bottom-modal-user">
+                                        <div className="sign-out-div flex px-3 py-2 text-lg items-center cursor-pointer" onClick={handleLogout}>
+                                            <div>
+                                                <svg data-v-9ba4cb7e="" data-v-5866404a="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" class="icon text-icon-contrast text-undefined mr-2"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 14 5-5-5-5m5 5H9"></path></svg>
+                                            </div>
+                                            <div >Sign Out</div>
+                                        </div>
+                                    </div>
+                                </>}
+                              
+
                             </div>
                             {isOpenModalUser &&
                                 <div id="myModalUser" class={`modal bg-modal-user ${isOpacityFullModalUser ? 'opacity-full' : 'opacity-10'} `} onClick={handleOutsideClickModalUser}>
@@ -186,12 +238,6 @@ export default function Navbar({ toggleSidebar, isSidebarOpen, isOpenSidebarRigh
                     </div>
                 </div>
             </div>
-
-            {/* modal */}
-
-
-
-
         </>
 
     )

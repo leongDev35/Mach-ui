@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ProviderRedux from "./components/ProviderRedux";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,11 +28,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="">
-          <div className="main">
-            {children}
+        <ProviderRedux>
+          <div className="">
+            <div className="main">
+              {children}
+            </div>
           </div>
-        </div>
+        </ProviderRedux>
       </body>
     </html>
   );

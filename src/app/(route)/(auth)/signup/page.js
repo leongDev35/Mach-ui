@@ -8,7 +8,7 @@ export default function Signup() {
     return (
 
         <>
-        <SignupComponent></SignupComponent>
+            <SignupComponent></SignupComponent>
         </>
     );
 }

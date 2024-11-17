@@ -39,8 +39,8 @@ export default function NavbarProvider({ children }) {
               <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
               :
               <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen}
-              isOpenSidebarRight={isOpenSidebarRight} 
-              
+                isOpenSidebarRight={isOpenSidebarRight}
+
               />
           )}
 
@@ -51,9 +51,6 @@ export default function NavbarProvider({ children }) {
                 const additionalProps = isChapterPage ? { isOpenSidebarRight, setIsOpenSidebarRight } : {};
                 return React.cloneElement(child, { isSidebarOpen, toggleSidebar, ...additionalProps });
               }
-
-
-
               )}
             </div>
           </div>

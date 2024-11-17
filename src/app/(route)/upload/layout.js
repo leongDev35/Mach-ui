@@ -1,9 +1,6 @@
-
-
-
 import NavbarProvider from "@/app/components/NavbarProvider";
 
-export default function LayoutTitle({ children }) {
+export default function LayoutUpload({ children }) {
     return (
         <>
             <NavbarProvider>

@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Japanese",
+        "flag": "/flags/jp.svg"
+    },
+    {
+        "name": "Japanese (Romanized)",
+        "flag": "/flags/jp.svg"
+    },
+    {
+        "name": "Chinese",
+        "flag": "/flags/cn.svg"
+    },
+    {
+        "name": "English",
+        "flag": "/flags/gb.svg"
+    },
+    {
+        "name": "Korean",
+        "flag": "/flags/kr.svg"
+    },
+    {
+        "name": "Vietnamese",
+        "flag": "/flags/vn.svg"
+    }
+]

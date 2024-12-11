@@ -3,6 +3,7 @@ import { useState } from "react";
 import ContentHomePage from "./components/ContentHomePage/ContentHomePage";
 import SelectGroupModal from "./components/Modal/SelectGroupModal";
 import NavbarProvider from "./components/NavbarProvider";
+import TestComponent from "./TestComponent";
 
 export default function Home() {
 
@@ -32,6 +33,7 @@ export default function Home() {
           </ContentHomePage >
         </NavbarProvider>
         <SelectGroupModal isSelectGroupModalOpen={isSelectGroupModalOpen} openModal={openModal} closeModal={closeModal} handleOutsideClick={handleOutsideClick} />
+        <TestComponent></TestComponent>
     </>
 
   );

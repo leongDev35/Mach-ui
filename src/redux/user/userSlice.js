@@ -1,11 +1,26 @@
 import { login } from "@/service/userService";
 import { createSlice } from "@reduxjs/toolkit";
 
+// Lấy user từ localStorage nếu có, nếu không trả về null.
+const getUserFromLocalStorage = () => {
+    if (typeof window !== 'undefined') {
+        console.log("client side");
+        
+        const storedUser = localStorage.getItem('user');
+        
+        return storedUser ? JSON.parse(storedUser) : null;
+    }
+    console.log("server side");
+
+    return null;
+};
+
 const initialState = {
     //! check Client or Server
-    user: typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : null,
+    user: getUserFromLocalStorage(),
     loading: false,
-    error: null
+    error: null,
+    isReady: false
 }
 
 //! SLICE tập hợp các REDUCER và ACTION cho 1 FEATURE cụ thể
@@ -18,6 +33,7 @@ const userSlice = createSlice({
         logout(state) {
             state.user = null;
             state.error = null;
+            state.isReady = true;
             localStorage.removeItem('user'); // Xóa user khỏi localStorage khi logout
         },
     },
@@ -38,12 +54,14 @@ const userSlice = createSlice({
                     // console.log(JSON.stringify(state));
                     //! lưu toàn bộ trả về của API
                     localStorage.setItem('user', JSON.stringify(action.payload))
+                    state.isReady = true; // Đánh dấu đã sẵn sàng sau khi dữ liệu được tải xong
                 }
 
             })
             .addCase(login.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload; // Lưu dữ liệu lỗi từ server
+                state.isReady = true; // Đảm bảo là sẵn sàng sau khi có lỗi
             });
     }
 })

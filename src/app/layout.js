@@ -1,4 +1,3 @@
-
 import localFont from "next/font/local";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";

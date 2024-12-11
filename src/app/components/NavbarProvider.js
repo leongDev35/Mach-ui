@@ -10,9 +10,6 @@ export default function NavbarProvider({ children }) {
   //! Sidebar right for only Chapter Page
   const [isOpenSidebarRight, setIsOpenSidebarRight] = useState(false);
 
-  // let toggleSidebarRight = () => {
-  //   setIsOpenSidebarRight(!isOpenSidebarRight);
-  // };
   const pathname = usePathname();
 
   const showNavbar = !['/login', '/signup'].includes(pathname); // Không hiển thị Navbar trên login và signup

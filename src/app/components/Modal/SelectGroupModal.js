@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function SelectGroupModal({ isSelectGroupModalOpen, openModal, closeModal, handleOutsideClick }) {
+export default function SelectGroupModal({ isSelectGroupModalOpen, closeModal, handleOutsideClick }) {
 
     return (
         <>{isSelectGroupModalOpen &&

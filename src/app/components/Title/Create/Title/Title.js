@@ -2,13 +2,12 @@
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react'
 
-export default function Title({nations}) {
+export default function Title({ nations, name, setName, description,setDescription, handleInputChange,listAltTitles, setListAltTitles }) {
 
-    const [listAltTitles, setListAltTitles] = useState([]);
     const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
     const lastInputRef = useRef(null);
     const dropdownRef = useRef(null);
-    
+
     // Đóng dropdown khi nhấn bên ngoài
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -24,7 +23,7 @@ export default function Title({nations}) {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [openDropdownIndex]);
 
-   
+
 
     const handleAddAltTitle = () => {
         setListAltTitles((prev) => {
@@ -62,15 +61,25 @@ export default function Title({nations}) {
     return (
         <div className='create-part'>
             <div className="detail-title-item">
-                <div className="detail-title-item-header">Title (1)<span className="text-red-500">*</span></div>
+                <div className="detail-title-item-header">Title <span className="text-red-500">*</span></div>
                 <input
                     className="input-create-page text-sm w-full rounded px-2 py-2 bg-[--sidebar-background]"
-                    // value={}
-                    // onChange={(e) => {
-
-                    //     // handleInputChange(e, setInputValueSearchTags)
-                    // }} 
+                    value={name}
+                    onChange={(e) => {
+                        handleInputChange(e, setName)
+                    }}
                     placeholder={"Title"}
+                />
+            </div>
+            <div className="detail-title-item">
+                <div className="detail-title-item-header">Description</div>
+                <input
+                    className="input-create-page text-sm w-full rounded px-2 py-2 bg-[--sidebar-background]"
+                    value={description}
+                    onChange={(e) => {
+                        handleInputChange(e, setDescription)
+                    }}
+                    placeholder={"Description"}
                 />
             </div>
             <div className="detail-title-item">
@@ -106,8 +115,8 @@ export default function Title({nations}) {
                                 className="input-create-page text-sm w-full rounded px-20 py-2 mb-2 bg-[--sidebar-background]"
                                 value={altTitle.title}
                                 onChange={(e) => {
-                                    updateTitle(index,e.target.value)
-                                }} 
+                                    updateTitle(index, e.target.value)
+                                }}
                                 placeholder={"Alt Title"}
                             />
                             <button

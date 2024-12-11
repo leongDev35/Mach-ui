@@ -21,7 +21,7 @@ export default function Navbar({ toggleSidebar, isSidebarOpen, isOpenSidebarRigh
     let reduxUser = useSelector(({ users }) => {
             return users.user
     })
-
+    
     const handleLogout = () => {
         dispatch(logout());
         // router.push('/login'); // Chuyển hướng đến trang đăng nhập sau khi logout

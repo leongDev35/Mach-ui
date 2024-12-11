@@ -1,7 +1,11 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import SelectBar from './SelectBar'
+import useMangaApi, { useMangaApiGet } from '../common/useMangaApi';
 
 export default function Upload() {
+
+
   return (
     <>
         

@@ -31,7 +31,7 @@ export default function Home() {
           <ContentHomePage openModal={openModal}>
           </ContentHomePage >
         </NavbarProvider>
-        <SelectGroupModal isSelectGroupModalOpen={isSelectGroupModalOpen} openModal={openModal} closeModal={closeModal} handleOutsideClick={handleOutsideClick} />
+        <SelectGroupModal isSelectGroupModalOpen={isSelectGroupModalOpen} closeModal={closeModal} handleOutsideClick={handleOutsideClick} />
     </>
 
   );

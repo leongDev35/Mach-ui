@@ -11,13 +11,13 @@ export default function InputUpload({ title, placeholder, chapterName, setChapte
 
     return (
         <>
-            <div tabindex="0" className="item-filter sort-by-filter text-sm cursor-pointer relative">
+            <div tabIndex="0" className="item-filter sort-by-filter text-sm cursor-pointer relative">
                 <div className="mb-1 text-[--text-gray]">
                     {title}
                 </div>
 
-                {/* Phải thêm tabindex để những thẻ kp input nhận được focus */}
-                <div tabindex="0" className="relative input-selected-option flex justify-between items-center rounded px-2 py-1 bg-[--sidebar-background]"
+                {/* Phải thêm tabIndex để những thẻ kp input nhận được focus */}
+                <div tabIndex="0" className="relative input-selected-option flex justify-between items-center rounded px-2 py-1 bg-[--sidebar-background]"
                 >
 
                     <input type="text" className="input-search-tags text-sm w-full bg-[--sidebar-background] "

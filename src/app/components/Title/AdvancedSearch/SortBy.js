@@ -5,13 +5,13 @@ export default function SortBy({dropdownRef, turnSwitchdown, sortBy, switchDropd
     
     return (
         <>
-            <div tabindex="0" ref={dropdownRef} className="item-filter sort-by-filter text-sm cursor-pointer relative">
+            <div tabIndex="0" ref={dropdownRef} className="item-filter sort-by-filter text-sm cursor-pointer relative">
                 <div className="mb-1 text-[--text-gray]">
                     Sort by
                 </div>
 
-                {/* Phải thêm tabindex để những thẻ kp input nhận được focus */}
-                <div tabindex="0" className="input-selected-option flex justify-between items-center rounded px-2 py-1 bg-[--sidebar-background]"
+                {/* Phải thêm tabIndex để những thẻ kp input nhận được focus */}
+                <div tabIndex="0" className="input-selected-option flex justify-between items-center rounded px-2 py-1 bg-[--sidebar-background]"
                     onClick={()=>{
                         turnSwitchdown(setSwitchDropdown,switchDropdown)
                     }}

@@ -6,7 +6,7 @@ export default function SelectInput({ dropdownRef, isDropdownOpen, selectedItem,
 
     return (
 
-        <div className='cursor-pointer' onClick={() => {
+        <div className='cursor-pointer relative' onClick={() => {
             setIsDropdownOpen(!isDropdownOpen);
         }} ref={dropdownRef}>
             <div tabIndex="0" className="select-input-create text-sm w-full rounded px-5 py-2 bg-[--sidebar-background] flex justify-between items-center">
@@ -39,7 +39,7 @@ export default function SelectInput({ dropdownRef, isDropdownOpen, selectedItem,
                     <svg data-v-9ba4cb7e data-v-c7ac6a42 xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="feather feather-chevron-down icon text-icon-contrast text-undefined chevron ml-1 flex-shrink-0 my-4" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></svg>
                 </div>
             </div>
-            {isDropdownOpen && (<div className='dropdown-original-lang w-full bg-[--sidebar-background] rounded-b'>
+            {isDropdownOpen && (<div className='dropdown-original-lang w-full bg-[--sidebar-background] rounded absolute top-[60px] z-20'>
                 {/* Dropdown body */}
                 {componentSelectArray}
             </div>)}

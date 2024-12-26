@@ -16,7 +16,7 @@ export default function HasTranslateChapters({ title, placeholder, dropdownRef, 
     }
     return (
         <>
-            <div tabindex="0" ref={dropdownRef} className="item-filter sort-by-filter text-sm relative">
+            <div tabIndex="0" ref={dropdownRef} className="item-filter sort-by-filter text-sm relative">
                 <div className="flex items-center gap-2 cursor-pointer select-none mb-1" onClick={()=> {
                     setTickCheckbox(!tickCheckbox)
                 }}>
@@ -46,8 +46,8 @@ export default function HasTranslateChapters({ title, placeholder, dropdownRef, 
                 </div>
 
 
-                {/* Phải thêm tabindex để những thẻ kp input nhận được focus */}
-                <div tabindex="0" className={`input-selected-option flex justify-between items-center rounded px-2 py-1 bg-[--sidebar-background]  ${tickCheckbox ? 'cursor-pointer' : 'pointer-events-none opacity-70 cursor-none'}`}
+                {/* Phải thêm tabIndex để những thẻ kp input nhận được focus */}
+                <div tabIndex="0" className={`input-selected-option flex justify-between items-center rounded px-2 py-1 bg-[--sidebar-background]  ${tickCheckbox ? 'cursor-pointer' : 'pointer-events-none opacity-70 cursor-none'}`}
                     onClick={() => {
                         turnSwitchdown(setSwitchDropdown, switchDropdown)
                     }}

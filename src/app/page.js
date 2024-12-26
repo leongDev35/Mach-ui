@@ -1,4 +1,5 @@
-"use client" //! load function react for first time load page
+"use client"
+
 import { useState } from "react";
 import ContentHomePage from "./components/ContentHomePage/ContentHomePage";
 import SelectGroupModal from "./components/Modal/SelectGroupModal";
@@ -32,8 +33,7 @@ export default function Home() {
           <ContentHomePage openModal={openModal}>
           </ContentHomePage >
         </NavbarProvider>
-        <SelectGroupModal isSelectGroupModalOpen={isSelectGroupModalOpen} openModal={openModal} closeModal={closeModal} handleOutsideClick={handleOutsideClick} />
-        <TestComponent></TestComponent>
+        <SelectGroupModal isSelectGroupModalOpen={isSelectGroupModalOpen} closeModal={closeModal} handleOutsideClick={handleOutsideClick} />
     </>
 
   );

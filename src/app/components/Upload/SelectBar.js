@@ -9,18 +9,23 @@ import ImageUpload from './ChoseImagesDetail'
 import ChoseImageDetail from './ChoseImagesDetail'
 import Image from 'next/image'
 
-export default function SelectBar() {
-    const [switchDropdownArtists, setSwitchDropdownArtists] = useState(false)
+export default function SelectBar({
+    chapterNumber,
+    setChapterNumber,
+    chapterName,
+    setChapterName,
+    selectedManga,
+    setSelectedManga,
+    selectedImages,
+    setSelectedImages
+}) {
     const [switchDropdownManga, setSwitchDropdownManga] = useState(false)
-    const [chapterNumber, setChapterNumber] = useState('')
-    const [chapterName, setChapterName] = useState('')
-    const [selectedImages, setSelectedImages] = useState([]);
-    const [isOpenModal, setIsOpenModal] = useState(false);
+
+
     const [isOpenModalChapterReview, setIsOpenModalChapterReview] = useState(false);
     // Hiện tooltip cho mỗi ảnh
     const [tooltip, setTooltip] = useState({ visible: false, text: "", x: 0, y: 0 });
     const tooltipRef = useRef(null);
-    const dropdownArtistsFilterRef = useRef(null);
     const dropdownMangaFilterRef = useRef(null);
     const turnSwitchdown = (setTurnSwitchDownFunc, switchDropDownType) => {
         setTurnSwitchDownFunc(!switchDropDownType);
@@ -33,10 +38,11 @@ export default function SelectBar() {
             turnoffSwitchdown(setDropdownFunc);
         }
     }
+
     const handleOutsideSwitchdown = (event) => {
-        checkHandleOutsite(event, dropdownArtistsFilterRef, setSwitchDropdownArtists);
         checkHandleOutsite(event, dropdownMangaFilterRef, setSwitchDropdownManga);
     }
+
     // Modal
     // Hàm mở modal
     const openModalChapterReview = () => {
@@ -86,26 +92,18 @@ export default function SelectBar() {
             document.removeEventListener('mousedown', handleOutsideSwitchdown);
         };
     }, []);
-    console.log(selectedImages);
-    
+
     return (
         <div className="flex flex-col gap-4 mt-5">
-            <CreaterFilter
-                title={"Group"}
-                placeholder={"Chose group"}
-                dropdownRef={dropdownArtistsFilterRef}
-                turnSwitchdown={turnSwitchdown}
-                switchDropdown={switchDropdownArtists}
-                setSwitchDropdown={setSwitchDropdownArtists}
-            >
-            </CreaterFilter>
             <CreaterFilter
                 title={"Manga"}
                 placeholder={"Chose Manga"}
                 dropdownRef={dropdownMangaFilterRef}
                 turnSwitchdown={turnSwitchdown}
                 switchDropdown={switchDropdownManga}
-                setSwitchDropdown={setSwitchDropdownManga}
+                setSwitchDropdownManga={setSwitchDropdownManga}
+                selectedManga={selectedManga}
+                setSelectedManga={setSelectedManga}
             >
             </CreaterFilter>
             <ChapterNumber
@@ -132,7 +130,7 @@ export default function SelectBar() {
             >Chapter Preview</button>
 
             {isOpenModalChapterReview && <>
-                <div id="myModal" class="modal"
+                <div id="myModal" className="modal"
                     onClick={handleOutsideClick}
                 >
                     <div id="modal-chapter-review" className="modal-chapter-review w-3/4 z-50"

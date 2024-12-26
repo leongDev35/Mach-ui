@@ -1,30 +1,25 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
-export default function PublicationYear({ title, placeholder, setPublicYear, publicYear }) {
-
+export default function PublicYear({setPublicYear, publicYear, placeholder }) {
+    const inputRef = useRef(null);
     function changeYear(number) {
-
-        console.log(publicYear);
-        
 
         if (Number(publicYear) + number < 0) {
             return;
         }
         setPublicYear(Number(publicYear) + number)
     }
-
+    const handleDivClick = () => {
+        inputRef.current.focus(); // Focus vào input khi nhấn vào div
+      };
     return (
-        <>
-            <div tabIndex="0" className="item-filter sort-by-filter text-sm cursor-pointer relative">
-                <div className="mb-1 text-[--text-gray]">
-                    {title}
-                </div>
+        <div className='cursor-pointer'>
+            <div tabIndex="0" className="select-input-create text-sm w-full rounded px-5 py-2 bg-[--sidebar-background] flex justify-between items-center"  onClick={handleDivClick}>
+                <div className='relative grow'>
 
-                {/* Phải thêm tabIndex để những thẻ kp input nhận được focus */}
-                <div tabIndex="0" className="relative input-selected-option flex justify-between items-center rounded px-2 py-1 bg-[--sidebar-background]"
+                    {/* <div className={`faded-placehoder ${publicYear ? 'translate-y-[8px] text-[--text-gray]' : 'translate-y-0 '}`}>{placeholder}</div> */}
 
-                >
-                    <input className="input-puclic-year text-sm w-full bg-[--background-grey]"
+                    <input ref={inputRef} className="input-puclic-year font-normal text-sm w-full bg-[--background-grey]"
                         value={publicYear}
                         onChange={(e) => {
                             const value = e.target.value;
@@ -33,9 +28,11 @@ export default function PublicationYear({ title, placeholder, setPublicYear, pub
                                 setPublicYear(value);
                             }
                             // handleInputChange(e, setInputValueSearchTags)
-                        }} placeholder={placeholder} />
+                        }}
+                        placeholder={placeholder}
+                        />
 
-                    <div className={`bar-change-year absolute right-[9px] top-[6px] flex ${publicYear != '' ? 'block': 'hidden'}`}>
+                    <div className={`bar-change-year absolute right-[9px] top-[3px] flex ${publicYear != '' ? 'block' : 'hidden'}`}>
                         <div onClick={() => {
                             changeYear(-1)
                         }} className="change-year ">
@@ -50,12 +47,8 @@ export default function PublicationYear({ title, placeholder, setPublicYear, pub
                         </div>
                     </div>
 
-
-
-
                 </div>
-
             </div>
-        </>
+        </div>
     )
 }

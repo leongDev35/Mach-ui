@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 
 export default function ChapterNumber({ title, placeholder, setChapterNumber, chapterNumber }) {
@@ -12,20 +13,20 @@ export default function ChapterNumber({ title, placeholder, setChapterNumber, ch
 
     return (
         <>
-            <div tabindex="0" className="item-filter sort-by-filter text-sm cursor-pointer relative">
+            <div tabIndex="0" className="item-filter sort-by-filter text-sm cursor-pointer relative">
                 <div className="mb-1 text-[--text-gray]">
                     {title}
                 </div>
 
-                {/* Phải thêm tabindex để những thẻ kp input nhận được focus */}
-                <div tabindex="0" className="relative input-selected-option flex justify-between items-center rounded px-2 py-1 bg-[--sidebar-background]"
+                {/* Phải thêm tabIndex để những thẻ kp input nhận được focus */}
+                <div tabIndex="0" className="relative input-selected-option flex justify-between items-center rounded px-2 py-1 bg-[--sidebar-background]"
 
                 >
                     <input className="input-search-tags text-sm w-full bg-[--sidebar-background]"
                         value={chapterNumber}
                         onChange={(e) => {
                             const value = e.target.value;
-                            if ((/^\d+$/.test(value) && Number(value) > -1 && Number(value) < 2050) || value === '') {
+                            if ((/^\d+$/.test(value) && Number(value) > -1 && Number(value) < 9999) || value === '') {
                                 // Nếu giá trị >= 0 hoặc input trống thì cập nhật giá trị
                                 setChapterNumber(value);
                             }

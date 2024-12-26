@@ -5,9 +5,7 @@ export default function TitlePage({ params }) {
   const { mangaId, mangaName } = params;
 
   return (
-    <NavbarProvider>
       <ContentMangaPage>
       </ContentMangaPage>
-    </NavbarProvider>
   );
 }

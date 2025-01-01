@@ -1,15 +1,45 @@
+"use client"
+import axios from "axios";
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
 
-export default function ContentMangaPage({ isSidebarOpen }) {
+export default function ContentMangaPage({ mangaId }) {
+
+    // lay thong tin manga tu mangaId
+    const [manga, setManga] = useState(null);
+    const [uniqueNamesCreater, setUniqueNamesCreater] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    console.log(manga);
+    console.log(uniqueNamesCreater);
+
+    useEffect(() => {
+        const fetchManga = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8686/api/v1/manga/${mangaId}`);
+                setManga(response.data);
+                setUniqueNamesCreater(Array.from(new Set(response.data.createrRoles.map(item => item.creater.name))))
+                setLoading(false);
+            } catch (err) {
+                console.error("Error fetching manga:", err);
+                setError("Không thể tải dữ liệu manga.");
+                setLoading(false);
+            }
+        };
+
+        fetchManga();
+    }, [mangaId]);
 
     // các trường của manga hiện thông tin lên
     // chỉnh lại id của manga
 
     return (
+        <>
+            {!manga ? <div>Loading...</div> :
                 <div className="title-manga grid grid-cols-[200px_auto] gap-4">
                     <div className="banner z-[-10] absolute top-[calc(-1*var(--navbar-height))] left-0 bg-red-200 w-full h-[500px] blur-sm opacity-25">
                         <Image className="rounded w-full h-[500px] object-cover"
-                            src={"/27f28108-8074-444b-9e0b-ffb525b0a5de.jpg.512.jpg"}
+                            src={manga.coverImage}
                             alt="Picture of the author"
                             width={100}
                             height={500}
@@ -19,41 +49,55 @@ export default function ContentMangaPage({ isSidebarOpen }) {
 
                     </div>
 
-                    <div className="image-manga row-span-4 h-[370px]">
-                        <Image className="rounded"
-                            src={"/27f28108-8074-444b-9e0b-ffb525b0a5de.jpg.512.jpg"}
-                            alt="Picture of the author"
-                            width={500}
-                            height={500}
+                    <div className="image-manga row-span-4 w-[200px] h-[283px] overflow-hidden relative">
+                        <Image className="rounded object-cover"
+                            src={manga.coverImage}
+                            alt="Picture of the Manga"
+                            fill={true}
                         />
                     </div>
                     <div className="name-manga flex flex-col h-[216px]">
-                        <div className="text-7xl font-bold">Hirayasumi</div>
-                        <div className="text-xl grow">ひらやすみ</div>
-                        <div className="text-lg">Shinzou Keigo</div>
+                        <div className="text-7xl font-bold">{manga.name}</div>
+                        <div className="text-xl grow">
+                            {manga.altTitles.map((item, index) => (
+                                // Với <React.Fragment>, bạn có thể trả về nhiều phần tử mà không cần bao bọc chúng trong một thẻ HTML
+                                <React.Fragment key={item.id}>
+                                    {item.title}
+                                    {index < manga.altTitles.length - 1 && ", "}
+                                </React.Fragment>
+                            ))}
+                        </div>
+                        <div className="text-lg">  {uniqueNamesCreater.map((item, index) => (
+                            <React.Fragment key={index}>
+                                {item}
+                                {index < uniqueNamesCreater.length - 1 && ", "}
+                            </React.Fragment>
+                        ))}</div>
                     </div>
                     <div className="title-button flex h-12 gap-2">
-                        <div className="button-status h-full w-56 bg-white"></div>
+                        <div className="button-status rounded text-base h-full w-56 bg-[--color-pink-purple] flex justify-center items-center">
+                            Add To Library
+                        </div>
                         <div className="button-favorite bg-white w-[74px] h-full "></div>
                         <div className="button-option bg-white w-12"></div>
                     </div>
                     <div className="manga-info h-[18px] flex flex-wrap items-center gap-3">
                         <div className="list-of-tags flex flex-wrap gap-3 text-[10px]">
-                            <div className="tag bg-[--background-tag] rounded px-1">
-                                <a href="">Comedy</a>
-                            </div>
-                            <div className="tag bg-[--background-tag] rounded px-1">
-                                <a href="">Drama</a>
-                            </div><div className="tag bg-[--background-tag] rounded px-1">
-                                <a href="">Slice of life</a>
-                            </div>
+                            {manga.tags.map((tag, index) => {
+                                return (
+                                    <div key={index} className="tag bg-[--background-tag] rounded px-1">
+                                        {/* them link vao tag */}
+                                        <a href="">{tag.name}</a>
+                                    </div>
+                                )
+                            })}
                         </div>
                         <div className="date-publication-and-status flex items-center gap-1">
                             <div className="dot-status w-2 h-2 bg-green-400 rounded-full"></div>
-                            <span className="text-xs font-semibold">Publication: 2021, Ongoing</span>
+                            <span className="text-xs font-semibold">Publication: {manga.releaseYear}, {manga.publicationStatus}</span>
                         </div>
                     </div>
-                    <div className="col-span-full">29-year-old freeter Ikuta Hiroto is a carefree young man without a love life, regular job, or any real worries about the future. He inherits an old house from the neighbourhood granny, where his 18-year-old cousin, Natsumi moves in with him to study art in Tokyo. This is a story about Hiroto and the people around him who struggle with life.</div>
+                    <div className="col-span-full">{manga.description}</div>
                     <div className="detail-manga col-span-full">
                         <div className="detail-manga-container flex flex-col">
                             <div className="synopsis mb-10">
@@ -61,13 +105,25 @@ export default function ContentMangaPage({ isSidebarOpen }) {
                                     <div className="w-fit">
                                         <div className="text-base font-bold mb-2">Author</div>
                                         <div className="flex gap-2">
-                                            <div className="text-xs bg-[--background-tag] rounded px-1">Shinzou Keigo</div>
+                                            {manga.authors.map((author, index) => {
+                                                return (
+                                                    <div key={index} className="text-xs bg-[--background-tag] rounded px-1">
+                                                        <a href="">{author.creater.name}</a>
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
                                     </div>
                                     <div className="w-fit">
                                         <div className="text-base font-bold mb-2">Artist</div>
                                         <div className="flex gap-2">
-                                            <div className="text-xs bg-[--background-tag] rounded px-1">Shinzou Keigo</div>
+                                        {manga.artists.map((artist, index) => {
+                                                return (
+                                                    <div key={index} className="text-xs bg-[--background-tag] rounded px-1">
+                                                        <a href="">{artist.creater.name}</a>
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
                                     </div>
                                     <div className="w-fit">
@@ -207,8 +263,12 @@ export default function ContentMangaPage({ isSidebarOpen }) {
                         </div>
                     </div>
                 </div>
+            }
 
-        
+        </>
+
+
+
 
     )
 }

@@ -2,6 +2,9 @@ import Image from "next/image";
 
 export default function ContentMangaPage({ isSidebarOpen }) {
 
+    // các trường của manga hiện thông tin lên
+    // chỉnh lại id của manga
+
     return (
                 <div className="title-manga grid grid-cols-[200px_auto] gap-4">
                     <div className="banner z-[-10] absolute top-[calc(-1*var(--navbar-height))] left-0 bg-red-200 w-full h-[500px] blur-sm opacity-25">

@@ -1,8 +1,8 @@
 import React from 'react'
 import TagsList from './TagsList'
 
-export default function Tags({setListTags}) {
-    const contentWarning = ["Gore" , "Sexual Violence"]
+export default function Tags({ setListTags }) {
+    const contentWarning = ["Gore", "Sexual Violence"]
     const format = [
         "4-Koma",
         "Adaptation",
@@ -86,12 +86,24 @@ export default function Tags({setListTags}) {
         "Zombies",
     ];
 
+    const demographics = ["Shonen",
+        "Kodomo",
+        "Seinen",
+        "Shōjo",
+        "Josei",
+        "Seijin/Ero Manga",
+        "Redisu/Lady’s Manga",
+        "Dōjinshi Manga",
+        "Gekiga",
+        "Silver & Golden"]
+
     return (
         <div className='w-full'>
             <TagsList setListTags={setListTags} header="Content Warning" tags={contentWarning}> </TagsList>
             <TagsList setListTags={setListTags} header="Format" tags={format}> </TagsList>
             <TagsList setListTags={setListTags} header="Genre" tags={genres}></TagsList>
             <TagsList setListTags={setListTags} header="Theme" tags={themes}></TagsList>
+            <TagsList setListTags={setListTags} header="Demographic" tags={demographics}></TagsList>
         </div>
     )
 }

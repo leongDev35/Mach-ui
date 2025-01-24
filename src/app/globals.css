@@ -11,9 +11,14 @@
   --color-pink-purple: rgb(161 121 192);
   --background-grey: rgb(47 51 59);
   --background-tags: rgb(40 42 54);
-  --background-tags-hover: rgb(47 51 59);
-  --background-hover: rgb(66 70 91);
+  --background-tags-hover: rgb(27, 31, 39);
+  --background-sidebar-right-button-hover: rgb(45 50 58);
+  --background-hover: rgb(77 78 81);
   --background-light-purple: rgb(123 93 147 / 20%);
+  --background-process-bar: rgb(115 120 124);
+  --background-bar-inner: rgb(130 103 155);
+  --background-process-bar-inner-wrap: rgba(56, 62 ,72, 1);
+  --background-process-bar-inner-wrap-opacity: rgba(56, 62 ,72, 0.1);
   --color-pink-purple-danger: rgb(93 57 69);
   --background-light-green: rgb(53 65 72);
   --color-purple: rgb(216 159 255);
@@ -25,6 +30,7 @@
   --sidebar-background: #343746;
   --navbar-height: 3.5rem;
   --padding-button: 0.45rem 3rem;
+  --color-accent: #333644;
 }
 
 /* ! Theo màu của hệ điều hành User */
@@ -37,8 +43,10 @@
 
 /* Toàn bộ thanh cuộn */
 ::-webkit-scrollbar {
-  width: 5px; /* Độ rộng của thanh cuộn dọc */
-  height: 12px; /* Chiều cao của thanh cuộn ngang */
+  width: 5px;
+  /* Độ rộng của thanh cuộn dọc */
+  height: 12px;
+  /* Chiều cao của thanh cuộn ngang */
 }
 
 /* Phần nền của thanh cuộn */
@@ -58,6 +66,7 @@
   background: var(--color-pink-purple);
   cursor: pointer;
 }
+
 /* Chỉnh màu nếu có autofill của input */
 input:-webkit-autofill {
   -webkit-text-fill-color: white !important;
@@ -78,16 +87,28 @@ body {
 
 .mark-over {
   font-weight: 400;
-  background-color: var(--background-tag);
+  background-color: var(--color-accent);
   width: fit-content;
   border-radius: var(--box-border-radius);
-  padding: 0.125rem 0.5rem;
+  padding: 0.125rem 12px;
 }
 
+.block-common:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.button-common:hover {
+  cursor: pointer;
+  background-color: var(--background-hover);
+  border-radius: 50%;
+}
+
+/* sidebar left */
 /* Transition sidebar transform */
 .sidebar {
   width: 256px;
-  transition: width 0.5s ease-in-out, opacity 1s ease-in-out;
+  /* transition: width 0.5s ease-in-out, opacity 1s ease-in-out; */
 }
 
 .sidebar-hidden {
@@ -112,11 +133,23 @@ body {
   margin-right: 4px;
 }
 
+
+.side-bar-left-navigate-item {
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.side-bar-left-navigate-item:hover {
+  background-color: var(--background-hover);
+  cursor: pointer;
+}
+
 /*! Nav bar  */
 .search-bar-navbar {
   /* border: 1px var(--color-pink-purple) solid; */
   transition: width 0.2s ease-in-out, opacity 1s ease-in-out;
 }
+
 .search-bar-navbar:focus-within {
   outline: 1px var(--color-purple) solid;
 }
@@ -249,12 +282,17 @@ body {
 /* ! Sidebar right */
 
 .sidebar-right {
-  border: 1px var(--color-pink-purple) solid;
+  border: 1px var(--color-accent) solid;
   z-index: 100;
 }
 
 .button-sidebar-right {
   background-color: var(--background-button-right-side);
+  cursor: pointer;
+}
+
+.button-sidebar-right:hover {
+  background-color: var(--background-sidebar-right-button-hover);
 }
 
 .center-children {
@@ -397,11 +435,9 @@ body {
 }
 
 .manga-update-name-cover {
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.7) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.7) 100%);
 }
 
 .text-wrap {
@@ -435,9 +471,11 @@ body {
 .input-advanced-search:focus {
   outline: none;
 }
+
 .input-search-tags:focus {
   outline: none;
 }
+
 .input-search-tags {
   font-size: 16px;
   line-height: 25px;
@@ -446,9 +484,11 @@ body {
 .input-search-tags::placeholder {
   color: rgb(149 156 168);
 }
+
 .input-puclic-year:focus {
   outline: none;
 }
+
 .input-puclic-year {
   font-size: 16px;
   line-height: 25px;
@@ -500,6 +540,7 @@ body {
   color: var(--color-purple) !important;
   /* background-color: var(--background-light-purple) !important; */
 }
+
 .selected-checkbox:hover {
   /* color: var(--color-purple) !important; */
   background-color: var(--background-light-purple) !important;
@@ -530,8 +571,8 @@ body {
   background-color: var(--background-light-purple) !important;
 }
 
-.input-selected-option {
-}
+.input-selected-option {}
+
 /* 
 .input-selected-option:focus-within {
   outline: 1px var(--color-purple) solid;
@@ -613,6 +654,7 @@ body {
   mask-composite: subtract;
   animation: l3 1s infinite linear;
 }
+
 @keyframes l3 {
   to {
     transform: rotate(1turn);
@@ -623,6 +665,7 @@ body {
 .menu-sidebar-create {
   list-style: none;
 }
+
 .menu-sidebar-create li {
   background-color: var(--background-button-right-side);
   padding: 1.5px 25px;
@@ -634,18 +677,20 @@ body {
   margin-bottom: 8px;
   font-size: 16px;
 }
+
 .menu-sidebar-create li:hover {
   opacity: 0.8;
 }
+
 .input-create-page {
   font-size: 16px;
   line-height: 25px;
   outline: none;
 }
+
 .input-create-page:focus {
   border: none;
   outline: 1px var(--color-pink-purple) solid;
-  
 }
 
 .input-create-page::placeholder {
@@ -659,6 +704,7 @@ body {
 .detail-title-item-header {
   margin-bottom: 10px;
 }
+
 .button-dash-title {
   padding: 5px 16px;
   border: var(--text-gray) 1px solid;
@@ -666,9 +712,10 @@ body {
 }
 
 .button-dash-title:hover {
- cursor: pointer;
- background-color: var(--background-grey);
+  cursor: pointer;
+  background-color: var(--background-grey);
 }
+
 .chose-nation-box::after {
   content: "";
   display: block;
@@ -678,6 +725,7 @@ body {
   height: 20px;
   border-right: var(--text-gray) 1px solid;
 }
+
 .choosed-nation {
   width: 25px;
   height: 16px;
@@ -732,13 +780,17 @@ body {
 .selected-authors .author-tag {
   display: flex;
   align-items: center;
-  background-color: var(--background-tag); /* Màu nền thẻ */
-  color: #fff; /* Màu chữ */
+  background-color: var(--background-tag);
+  /* Màu nền thẻ */
+  color: #fff;
+  /* Màu chữ */
   padding: 5px 10px;
-  border-radius: 5px; /* Bo góc */
+  border-radius: 5px;
+  /* Bo góc */
   font-size: 14px;
   font-weight: 500;
-  white-space: nowrap; /* Không cho text xuống dòng */
+  white-space: nowrap;
+  /* Không cho text xuống dòng */
   cursor: default;
 }
 
@@ -750,7 +802,8 @@ body {
 }
 
 .selected-authors .author-tag .remove-btn:hover {
-  color: var(--color-purple); /* Màu khi hover nút xóa */
+  color: var(--color-purple);
+  /* Màu khi hover nút xóa */
 }
 
 /* pagination */
@@ -758,6 +811,7 @@ body {
   display: flex;
   gap: 0.25rem;
 }
+
 .list-page-numbers .active {
   background-color: var(--color-pink-purple);
 }
@@ -788,3 +842,107 @@ body {
 .pagination-button:hover {
   background-color: var(--background-hover);
 }
+
+/* For manga page */
+
+.tag-manga-page {
+  padding: 4px 8px;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  background-color: var(--color-accent);
+}
+
+.tag-manga-page:hover {
+  background-color: var(--color-pink-purple);
+  cursor: pointer;
+}
+
+.chapter:hover {
+  background-color: var(--background-tag);
+  cursor: pointer;
+}
+
+.process-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  height: 72px;
+  border-radius: 5px;
+  padding: 24px 10px 0 10px;
+}
+
+.process-bar:hover {
+  padding: 24px 0px 0 0px;
+}
+
+.process-bar:hover .process-bar-in {
+  background-color: var(--background-tags);
+  height: 48px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.process-bar:hover .process-bar-inner-wrap {
+  height: 16px;
+  width: 95%;
+  border-radius: 0.5rem;
+
+  background-color: transparent;
+}
+
+.process-bar-in {
+  height: 4px;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.process-bar-inner-wrap {
+  height: 4px;
+  display: flex;
+  /* background-color: var(--background-process-bar); */
+}
+
+.process-bar-inner {
+  height: 100%;
+  background-color: var(--background-bar-inner);
+  border-radius: 0.5rem;
+
+}
+
+.current-page-in {
+  height: 100%;
+  border-radius: 0.5rem;
+  background-color: var(--color-pink-purple);
+}
+
+.divider-process-bar {
+  gap: 1px;
+}
+
+.divider-process-bar-item {
+  /* background-color: var(--background-process-bar-inner-wrap); */
+  cursor: pointer;
+  position: relative;
+}
+
+.divider-process-bar-item-label {
+  position: absolute;
+  top: -27px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--background-grey);
+  border-radius: 0.5rem;
+  padding: 0px 7px;
+  opacity: 1 !important;
+  z-index: 100;
+}
+
+.divider-process-bar-item:hover {
+
+}
+

@@ -50,7 +50,7 @@ function DraggableImage({ image, index, moveImage, removeImage }) {
   );
 }
 
-export default function ChoseImageDetail({selectedImages, setSelectedImages}) {
+export default function ChoseImageDetail({selectedImages, setSelectedImages, chapterNumber}) {
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
@@ -60,12 +60,13 @@ export default function ChoseImageDetail({selectedImages, setSelectedImages}) {
       id: `${Date.now()}-${index}`,
       url: URL.createObjectURL(file), //! xem trước ảnh tải lên từ url cục bộ mà không phải tải lên server
       name: file.name,
-      path: `Chap1/${file.name}`,
+      path: `/manga_images/Chapter_${chapterNumber}/${file.name}`, //! tạm thời sử dụng đường dẫn cố định ở trong public
     }));
     // ! Join các ảnh cũ và mới
     setSelectedImages((prevImages) => prevImages.concat(imagesArray));
   };
 
+  console.log(selectedImages,123);
   
   const openFilePicker = () => {
     document.getElementById('imageUploadInput').click();

@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation";
 import { logout } from "@/redux/user/userSlice";
 import Image from "next/image";
-export default function Navbar({ toggleSidebar, isSidebarOpen, isOpenSidebarRight }) {
+export default function Navbar({ toggleSidebar, isSidebarOpen,isChapterPage, isOpenSidebarRight }) {
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [opacityNav, setOpacityNav] = useState(0);
@@ -125,17 +125,16 @@ export default function Navbar({ toggleSidebar, isSidebarOpen, isOpenSidebarRigh
 
     return (
 
-        <div className={`navbar-container w-full h-[56px] fixed flex justify-center z-40 
+        <div className={`navbar-container w-full h-[56px] ${isChapterPage? 'absolute' : 'fixed'}  flex justify-center z-40 
             `}>
-            <div className={`w-full h-[56px] fixed  ${isScrolled ? `bg-[--background-tag]  backdrop-blur-lg opacity-${opacityNav} border-b-[3px] border-[--color-pink-purple]`
+            <div className={`w-full h-[56px] ${isChapterPage? 'absolute' : 'fixed'}  ${isScrolled ? `bg-[--background-tag]  backdrop-blur-lg opacity-${opacityNav} border-b-[3px] border-[--color-pink-purple]`
                 : 'bg-transparent'
                 }`}></div>
-            <div className={`navbar fixed w-full px-6 max-w-[1440px] m-auto bg-transparent backdrop-blur-sm flex items-center justify-between right-side 
+            <div className={`navbar  ${isChapterPage? '' : 'fixed'} w-full px-6 max-w-[1440px] bg-transparent backdrop-blur-sm flex items-center justify-between right-side 
                    ${isSidebarOpen ? 'pl-[286px] largepc:pl-8' : ''}
-                   ${isOpenSidebarRight ? 'pr-[312px] largepc:pr-8' : ''}
                    `}>
                 <div className={`flex items-center mr-auto ${!isSidebarOpen ? '' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="open-sidebar-button w-10 h-10 bg-transparent flex justify-center items-center" onClick={toggleSidebar}>
+                    <div className="open-sidebar-button button-common w-10 h-10 bg-transparent flex justify-center items-center mr-2" onClick={toggleSidebar}>
                         <svg data-v-9ba4cb7e data-v-8d292eb9 xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" viewBox="0 0 24 24" className="icon" style={{ color: 'currentcolor' }}><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12h12M3 6h18M3 18h6" /></svg>
 
                     </div>

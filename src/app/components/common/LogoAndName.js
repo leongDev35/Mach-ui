@@ -2,10 +2,10 @@
 export default function LogoAndName() {
   return (
     <>
-            <div className="navbar-left h-14 flex items-center">
-                        <div className="favicon-ico w-[45px] h-10 bg-transparent ">
-                            <svg className="flex items-center justify-center fill-[--color-purple]" version={1.0} id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 500 500" enableBackground="new 0 0 500 500" xmlSpace="preserve">
-                                <path  transform="translate(-125, -125) scale(1.5)"  d="M356.609,161.573c-27.355,6.172-48.144,23.22-62.471,39.493c5.55-8.871,10.419-17.25,11.486-20.912
+      <div className="cursor-pointer navbar-left h-14 flex items-center">
+        <div className="favicon-ico w-[45px] h-10 bg-transparent ">
+          <svg className="flex items-center justify-center fill-[--color-purple]" version={1.0} id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 500 500" enableBackground="new 0 0 500 500" xmlSpace="preserve">
+            <path transform="translate(-125, -125) scale(1.5)" d="M356.609,161.573c-27.355,6.172-48.144,23.22-62.471,39.493c5.55-8.871,10.419-17.25,11.486-20.912
     c2.74-9.412-17.258,13.235-17.258,13.235s8.265-13.289,12.526-27.536c4.258-14.249-18.92,19.697-18.92,19.697
     s8.835-13.736,14.278-29.028c5.442-15.292-16.74,13.722-16.74,13.722s0,0,8.137-24.163c8.137-24.162,1.913-19.841-16.186,7.296
     c-15.414,23.117-8.376,50.522-3.434,63.667c-1.997-0.409-4.03-0.863-6.107-1.381c-26.954-6.739-29.404-9.19-29.404-9.19
@@ -21,10 +21,10 @@ export default function LogoAndName() {
     c14.058-6.438-32.881-7.74-32w.881-7.74s24.146-3.583,45.534-13.19c21.388-9.607-42.316-3.044-42.316-3.044
     s29.469-5.834,53.275-15.055c23.809-9.22-37.188-4.085-37.188-4.085s0,0,37.163-15.15
     C418.428,159.05,414.533,148.501,356.609,161.573z" />
-                            </svg>
-                        </div>
-                        <p className="text-2xl italic tracking-wider text-[--color-purple] font-bold">MangaLeo</p>
-                    </div>
+          </svg>
+        </div>
+        <p className="text-2xl italic tracking-wider text-[--color-purple] font-bold">MangaLeo</p>
+      </div>
     </>
   )
 }

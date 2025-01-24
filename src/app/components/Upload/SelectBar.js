@@ -119,6 +119,7 @@ export default function SelectBar({
                 setChapterName={setChapterName}
             ></InputUpload>
             <ChoseImageDetail
+                chapterNumber={chapterNumber}
                 selectedImages={selectedImages}
                 setSelectedImages={setSelectedImages}
             >

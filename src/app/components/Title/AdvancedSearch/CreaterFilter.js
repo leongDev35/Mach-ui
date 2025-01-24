@@ -93,10 +93,6 @@ export default function CreaterFilter({
                         </button>
                     </div>
                 }
-
-
-
-
             </div>
             {/* dropdown */}
             <div id='1' className={`dropdown-filter-option-list rounded text-base w-full laptop:h-[448px] bg-[--background-chapter] absolute z-10 mt-1 ${!switchDropdown ? 'hidden' : 'block'}`}

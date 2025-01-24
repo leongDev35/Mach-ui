@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import SelectBar from './SelectBar'
 import { useMangaApiPost } from '../common/useMangaApi';
 import { useSelector } from 'react-redux';
-import { getCurrentDate } from '../common/commonFunc';
+import { getCurrentDate, getCurrentDateTimeISO } from '../common/commonFunc';
 
 export default function Upload() {
   // state selected field
@@ -15,9 +15,10 @@ export default function Upload() {
 
   const user = useSelector(({ users }) => {
     return users.user;
-
   });
 
+  console.log(selectedImages);
+  
   const isSaveEnabled =
     chapterName &&
     chapterNumber &&
@@ -26,18 +27,21 @@ export default function Upload() {
     user.id;
 
   const handleSave = async () => {
-    const pages = selectedImages.map(item => ({
-      imageUrl: `/${item.name}`
+    const pages = selectedImages.map((item, index) => ({
+      imageUrl: `${item.path}`,
+      pageOrder: index + 1
     }))
+    console.log(pages);
+    
     const payload = {
       chapterNumber: chapterNumber,
       chapterName: chapterName,
       mangaId: selectedManga.id,
       uploadUserId: user.id,
       pages: pages,
-      releaseDate: getCurrentDate()
+      releaseDate: getCurrentDateTimeISO()
     };
-    console.log(payload);
+
     const response = await sendMangaData(payload, '/chapter');
     if (response) {
       console.log("Chapter saved successfully:", response);
@@ -46,7 +50,6 @@ export default function Upload() {
   }
   return (
     <>
-
       <div className="font-bold text-[26px]">Upload Chapter</div>
 
       <SelectBar

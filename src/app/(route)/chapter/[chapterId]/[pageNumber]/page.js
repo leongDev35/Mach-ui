@@ -1,17 +1,16 @@
+"use client"
+
 import ChapterBody from "@/app/components/ChapterBody/ChapterBody";
 import NavbarProvider from "@/app/components/NavbarProvider";
 import SidebarRight from "@/app/components/Sidebar/SidebarRight";
 import page from "@/app/(route)/follows/library/page";
+import axios from "axios";
 
-//! sau này sử dụng Dynamic metadata
-export const metadata = {
-    title: "Chapter ",
-};
+import { use } from "react";
 
 export default function chapterPages({ params }) {
-    const { chapterId, pageNumber } = params;
+    const { chapterId, pageNumber } = use(params);
     return (
-
         <>
             <NavbarProvider>
                 <ChapterBody chapterId={chapterId} pageNumber={pageNumber}>

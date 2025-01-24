@@ -22,15 +22,12 @@ export default function Create() {
   const [contentRating, setContentRating] = useState(null);
   const [publicationStatus, setPublicationStatus] = useState(null);
   const [listTags, setListTags] = useState([]);
-
   const { sendMangaData, loading, error } = useMangaApiPost();
   const router = useRouter();
   
-
   const isSaveEnabled =
     name &&
     listAuthor.length > 0 &&
-    listArtist.length > 0 &&
     coverImage &&
     originalLanguage &&
     contentRating &&

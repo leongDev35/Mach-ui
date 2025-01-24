@@ -7,9 +7,7 @@ export default async function TitlePage({ params }) {
   console.log(mangaName);
 
   return (
-   
       <ContentMangaPage mangaId={mangaId}>
       </ContentMangaPage>
-
   );
 }

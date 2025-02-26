@@ -54,7 +54,6 @@ export default function ChoseImageDetail({selectedImages, setSelectedImages, cha
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
-    console.log(files);
     
     const imagesArray = files.map((file, index) => ({
       id: `${Date.now()}-${index}`,
@@ -66,8 +65,6 @@ export default function ChoseImageDetail({selectedImages, setSelectedImages, cha
     setSelectedImages((prevImages) => prevImages.concat(imagesArray));
   };
 
-  console.log(selectedImages,123);
-  
   const openFilePicker = () => {
     document.getElementById('imageUploadInput').click();
   };

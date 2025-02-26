@@ -1,6 +1,7 @@
 "use client"
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default function ContentMangaPage({ mangaId }) {
@@ -230,26 +231,30 @@ export default function ContentMangaPage({ mangaId }) {
                                             <ul>
                                                 {manga.chapters.map((chapter, index) => {
                                                     return (
-                                                        <li key={index} className=" chapter flex justify-between bg-[--background-chapter] h-[52px] rounded px-3 py-1 mb-2">
-                                                            <div>
-                                                                <div className="flex items-center font-bold">
-                                                                    <svg data-v-9ba4cb7e data-v-c031ce93 xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" viewBox="0 0 24 24" className=" cursor-pointer mr-2 opacity-40"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.9 4.24A9 9 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3.001 3.001 0 0 1-5.194-2.098A3 3 0 0 1 9.88 9.88m8.06 8.06A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94zM1 1l22 22" /></svg>
-                                                                    <img className="inline-block mr-2" title="Japanese" src={`${chapter.language}`} alt="Japanese flag icon" width="22" height="22"></img>
-                                                                    Ch.{chapter.chapterNumber} - {chapter.name}</div>
-                                                            </div>
-                                                            <div className="w-[160px]">
-                                                                <div className="float-left">
-                                                                    <div className="flex items-center gap-1">
-                                                                        <svg data-v-9ba4cb7e data-v-c031ce93 xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="feather feather-clock icon small text-icon-contrast text-undefined mr-0.5 md:mr-1" viewBox="0 0 24 24"><circle cx={12} cy={12} r={10} /><path d="M12 6v6l4 2" /></svg>
-                                                                        {chapter.releaseDate}</div>
-                                                                    <div className="flex items-center gap-1 ">
-                                                                        <svg data-v-9ba4cb7e data-v-514756c3 xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" viewBox="0 0 24 24" className="icon small text-icon-contrast text-undefined mr-0.5 md:mr-1"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m8-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8" /></svg>
-                                                                        <div className="text-blue-400">
-                                                                            {chapter.user.firstname}
+                                                        <li key={index} className=" chapter bg-[--background-chapter] h-[52px] rounded px-3 py-1 mb-2">
+                                                            <Link className="flex justify-between" href={`/chapter/${chapter.id}/1`}>
+                                                                <div>
+                                                                    <div className="flex items-center font-bold">
+                                                                        <svg data-v-9ba4cb7e data-v-c031ce93 xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" viewBox="0 0 24 24" className=" cursor-pointer mr-2 opacity-40"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.9 4.24A9 9 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3.001 3.001 0 0 1-5.194-2.098A3 3 0 0 1 9.88 9.88m8.06 8.06A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94zM1 1l22 22" /></svg>
+                                                                        <img className="inline-block mr-2" title="Japanese" src={`${chapter.language}`} alt="Japanese flag icon" width="22" height="22"></img>
+                                                                        Ch.{chapter.chapterNumber} - {chapter.name}</div>
+                                                                </div>
+                                                                <div className="w-[160px]">
+                                                                    <div className="float-left">
+                                                                        <div className="flex items-center gap-1">
+                                                                            <svg data-v-9ba4cb7e data-v-c031ce93 xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="feather feather-clock icon small text-icon-contrast text-undefined mr-0.5 md:mr-1" viewBox="0 0 24 24"><circle cx={12} cy={12} r={10} /><path d="M12 6v6l4 2" /></svg>
+                                                                            {chapter.releaseDate}</div>
+                                                                        <div className="flex items-center gap-1 ">
+                                                                            <svg data-v-9ba4cb7e data-v-514756c3 xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" viewBox="0 0 24 24" className="icon small text-icon-contrast text-undefined mr-0.5 md:mr-1"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m8-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8" /></svg>
+                                                                            <div className="text-blue-400">
+                                                                                {chapter.user.firstname}
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+
+                                                            </Link>
+
                                                         </li>
                                                     )
                                                 })}

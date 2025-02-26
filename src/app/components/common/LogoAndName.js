@@ -1,8 +1,9 @@
+import Link from "next/link";
 
 export default function LogoAndName() {
   return (
     <>
-      <div className="cursor-pointer navbar-left h-14 flex items-center">
+      <Link href={"/"} className="cursor-pointer navbar-left h-14 flex items-center">
         <div className="favicon-ico w-[45px] h-10 bg-transparent ">
           <svg className="flex items-center justify-center fill-[--color-purple]" version={1.0} id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 500 500" enableBackground="new 0 0 500 500" xmlSpace="preserve">
             <path transform="translate(-125, -125) scale(1.5)" d="M356.609,161.573c-27.355,6.172-48.144,23.22-62.471,39.493c5.55-8.871,10.419-17.25,11.486-20.912
@@ -24,7 +25,7 @@ export default function LogoAndName() {
           </svg>
         </div>
         <p className="text-2xl italic tracking-wider text-[--color-purple] font-bold">MangaLeo</p>
-      </div>
+      </Link>
     </>
   )
 }

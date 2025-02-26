@@ -9,7 +9,9 @@ import TestComponent from "./TestComponent";
 export default function Home() {
 
   const [isSelectGroupModalOpen, setIsSelectGroupModalOpen] = useState(false);
-
+  const [firstChapterList, setFirstChapterList] = useState([]);
+  console.log(firstChapterList);
+  
   // Hàm mở modal 
   const openModal = () => {
     setIsSelectGroupModalOpen(true);
@@ -29,11 +31,11 @@ export default function Home() {
 
   return (
     < >
-        <NavbarProvider>
-          <ContentHomePage openModal={openModal}>
-          </ContentHomePage >
-        </NavbarProvider>
-        <SelectGroupModal isSelectGroupModalOpen={isSelectGroupModalOpen} closeModal={closeModal} handleOutsideClick={handleOutsideClick} />
+      <NavbarProvider>
+        <ContentHomePage openModal={openModal} setFirstChapterList={setFirstChapterList}>
+        </ContentHomePage >
+      </NavbarProvider>
+      <SelectGroupModal isSelectGroupModalOpen={isSelectGroupModalOpen} closeModal={closeModal} handleOutsideClick={handleOutsideClick} firstChapterList={firstChapterList}/>
     </>
 
   );

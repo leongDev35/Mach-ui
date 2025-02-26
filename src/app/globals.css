@@ -17,10 +17,11 @@
   --background-light-purple: rgb(123 93 147 / 20%);
   --background-process-bar: rgb(115 120 124);
   --background-bar-inner: rgb(130 103 155);
-  --background-process-bar-inner-wrap: rgba(56, 62 ,72, 1);
-  --background-process-bar-inner-wrap-opacity: rgba(56, 62 ,72, 0.1);
+  --background-process-bar-inner-wrap: rgba(56, 62, 72, 1);
+  --background-process-bar-inner-wrap-opacity: rgba(56, 62, 72, 0.1);
   --color-pink-purple-danger: rgb(93 57 69);
   --background-light-green: rgb(53 65 72);
+  --background-accent-hover: rgb(66 70 91);
   --color-purple: rgb(216 159 255);
   --color-green: rgb(80 250 123);
   --color-red: rgb(229 64 64);
@@ -45,13 +46,13 @@
 ::-webkit-scrollbar {
   width: 5px;
   /* Độ rộng của thanh cuộn dọc */
-  height: 12px;
+  height: 5px;
   /* Chiều cao của thanh cuộn ngang */
 }
 
 /* Phần nền của thanh cuộn */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  /* background: #f1f1f1; */
   border-radius: 10px;
 }
 
@@ -274,6 +275,11 @@ body {
   border-radius: 4px;
 }
 
+.list-group {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
 .item-list-group {
   background-color: var(--background-chapter);
   border-left: 2px #8be8fc solid;
@@ -325,11 +331,34 @@ body {
   display: flex;
 }
 
-/*  */
-.homepage-body {
-  box-shadow: 0px -43px 64px 89px #282a36;
+.bio-cover-item {
+
 }
 
+/*  */
+.homepage-body {
+  /* box-shadow:  0px -43px 64px 89px #282a36; */
+}
+
+.homepage-header {
+  /* box-shadow: inset -5px -111px 45px -36px #282a36; */
+
+}
+
+.box-shadow-header {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0px -127px 56px -48px #282a36;
+}
+
+/* .homepage-hearder-box-shadow {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset -5px -111px 45px -36px #282a36;
+} */
 /* ! Login page */
 .checkbox-login .peer::before {
   background: transparent !important;
@@ -942,7 +971,4 @@ body {
   z-index: 100;
 }
 
-.divider-process-bar-item:hover {
-
-}
-
+.divider-process-bar-item:hover {}

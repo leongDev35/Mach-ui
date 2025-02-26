@@ -4,6 +4,10 @@ import SidebarRight from "../Sidebar/SidebarRight";
 import { useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import { useRouter, usePathname } from 'next/navigation';
+import LongStrip from "./PageDisplayStyle/LongStrip";
+import WideStrip from "./PageDisplayStyle/WideStrip";
+import SinglePage from "./PageDisplayStyle/SinglePage";
+import Link from "next/link";
 export default function ChapterBody({ chapterId, pageNumber, setIsOpenSidebarRight, isOpenSidebarRight, isSidebarOpen }) {
     const router = useRouter();
     // console.log(pageNumber);
@@ -13,17 +17,18 @@ export default function ChapterBody({ chapterId, pageNumber, setIsOpenSidebarRig
     let initialPage = Number(pageNumber) || 1; //! trang ban đầu
     const [hoverIndex, setHoverIndex] = useState(null);
     const [currentPage, setCurrentPage] = useState(pageNumber);
+    const [currentChapter, setCurrentChapter] = useState(null);
     const [chapter, setChapter] = useState(null);
+    const [chapterList, setChapterList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [pages, setPages] = useState([]);
-
+    const [currentDisplayStyles, setCurrentDisplayStyles] = useState(0);
+    const [currentImageFit, setCurrentImageFit] = useState(1);
+    const [currentProcessBarStyle, setCurrentProcessBarStyle] = useState(0);
     const pageRefs = useRef([]);
-    // console.log(chapter);
-    // console.log(chapterId);
-    // console.log(pages);
-    // console.log(initialPage);
-    // console.log(currentPage);
+    const containerListPageRef = useRef(null);
+    const [flagScroll, setFlagScroll] = useState(false);
 
     //! Cuộn tới trang từ URL khi component được render
     useEffect(() => {
@@ -37,27 +42,27 @@ export default function ChapterBody({ chapterId, pageNumber, setIsOpenSidebarRig
                 setCurrentPage(initialPage);
                 initialPage = null;
                 //! thay đổi vị triis không cần cuộn
-                const rect = pageRef.getBoundingClientRect(); // Lấy thông tin vị trí của phần tử trong viewport
-                console.log(rect);
+                // const rect = pageRef.getBoundingClientRect(); // Lấy thông tin vị trí của phần tử trong viewport
+                // const scrollTop = window.scrollY + rez`ct.top; // Tính vị trí cuộn cần đến
 
-                const scrollTop = window.scrollY + rect.top; // Tính vị trí cuộn cần đến
-
-                // Đặt vị trí cuộn ngay lập tức
-                window.scrollTo({
-                    top: scrollTop,
-                    behavior: "auto", // Cuộn ngay lập tức, không mượt mà
-                });
+                // // Đặt vị trí cuộn ngay lập tức
+                // window.scrollTo({
+                //     top: scrollTop,
+                //     behavior: "auto", // Cuộn ngay lập tức, không mượt mà
+                // });
             }
         }, 500); // Trì hoãn để đảm bảo `ref` đã được gán
     }, [initialPage]);
 
-    // lấy thoogn tin chapter
+    //! lấy thông tin chapter
     useEffect(() => {
         const fetchManga = async () => {
             try {
                 const response = await axios.get(`${process.env.NEXT_PUBLIC_SITE}/api/v1/chapter/${chapterId}`);
                 setChapter(response.data);
                 setPages(response.data.pages);
+                setCurrentChapter(response.data.chapterNumber);
+                setChapterList(response.data.manga.chapters);
                 setLoading(false);
             } catch (err) {
                 console.error("Error fetching Chapter:", err);
@@ -69,38 +74,60 @@ export default function ChapterBody({ chapterId, pageNumber, setIsOpenSidebarRig
         fetchManga();
     }, [chapterId]);
 
-
     let toggleSidebarRight = () => {
         setIsOpenSidebarRight(!isOpenSidebarRight);
     };
 
-
-
     // scroll làm current page thay đổi
     useEffect(() => {
-        const handleScroll = () => {
-
-            const scrollTop = window.scrollY;
-            // console.log(scrollTop, "scrollTop");
-            const windowHeight = window.innerHeight;
-            // console.log(windowHeight, "windowHeight");
-
-            const documentHeight = document.body.scrollHeight;
-            // console.log(pages.length, "pages.length");
-            // console.log((scrollTop + 170) / windowHeight);
-
-            //! Số trang được tính dựa trên vị trí cuộn, phải trừ đi phần bên trên
-            const newPage = Math.min(Math.ceil((scrollTop + 170) / windowHeight), pages.length);
-
-            if (newPage !== currentPage) {
-                console.log("thay đổi khi cuộn");
-
-                setCurrentPage(newPage);
-            }
-        };
-        // xử lý khi thay đổi current page trong sidebar right
         const pageRef = pageRefs.current[currentPage - 1];
-        if (pageRef) {
+        // xử lý cuộn
+        const handleScroll = () => {
+            if (containerListPageRef.current) {
+                //! trường hợp wide strip
+                if (currentDisplayStyles === 1) {
+                    if (pageRef) {
+                        const rect = pageRef.getBoundingClientRect(); // Lấy thông tin vị trí của phần tử trong viewport
+
+                        if (rect.left > rect.width) {
+                            setCurrentPage(currentPage + 1);
+                            setFlagScroll(true);
+                        } else if (rect.left < -rect.width) {
+                            setCurrentPage(currentPage - 1);
+                            setFlagScroll(true);
+                        }
+                    }
+                }
+
+                //! trường hợp long strip
+                if (currentDisplayStyles === 0) {
+                    if (pageRef) {
+                        const rect = pageRef.getBoundingClientRect(); // Lấy thông tin vị trí của phần tử trong viewport
+                        if (rect.top > rect.height) {
+                            setCurrentPage(currentPage - 1);
+                            setFlagScroll(true);
+                        } else if (rect.top < -rect.height) {
+                            setCurrentPage(currentPage + 1);
+                            setFlagScroll(true);
+                        }
+
+                    }
+                }
+
+            }
+
+        };
+        if (containerListPageRef.current) {
+            containerListPageRef.current.addEventListener("scroll", handleScroll);
+        }
+        // console.log(flagScroll, "flagScroll");
+
+        // xử lý khi thay đổi current page trong sidebar right
+        console.log("outside", flagScroll);
+
+        if (pageRef && !flagScroll) {
+            console.log("inside", flagScroll);
+
             //! cuộn mượt mà
             pageRef.scrollIntoView({ behavior: "auto" });
             //! thay đổi vị trí không cần cuộn
@@ -112,7 +139,6 @@ export default function ChapterBody({ chapterId, pageNumber, setIsOpenSidebarRig
             //     behavior: "smooth", // Cuộn ngay lập tức, không mượt mà
             // });
         }
-
         // handle next page mỗi khi current page thay đổi
         const newPath = `/chapter/${chapterId}/${currentPage}`
         window.history.replaceState(null, '', newPath)
@@ -120,104 +146,89 @@ export default function ChapterBody({ chapterId, pageNumber, setIsOpenSidebarRig
         window.addEventListener('scroll', handleScroll);
         // xóa sự kiện scroll
         return () => {
+            if (containerListPageRef.current) {
+                containerListPageRef.current.removeEventListener("scroll", handleScroll);
+            }
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [currentPage, pages]);
-
+    }, [currentPage, pages, currentDisplayStyles]);
 
     return (
         <>
-            <div className={`w-full ${isSidebarOpen ? 'largepc:pl-[256px] ' : ' '}
-                
-                `} >
 
-                <div>
-                    <div className="chapter-name text-lg text-white font-bold">August 31</div>
-                    <div className="manga-name text-[--color-pink-purple] cursor-pointer">Hirayasumi</div>
-                </div>
-                <div className="detailt-chapter flex justify-around gap-4 mt-2">
-                    <div className="w-1/3 h-7 bg-[--color-accent] rounded flex justify-center items-center">Vol.7,Ch. 63</div>
-                    <div className="w-1/3 h-7 bg-[--color-accent] rounded flex justify-center items-center">Pg. {currentPage} / {pages.length}</div>
-                    <div className="w-1/3 h-7 bg-[--color-accent] hover:bg-[--background-tags-hover] rounded flex justify-center items-center cursor-pointer" onClick={toggleSidebarRight}>Menu
-                        <svg data-v-9ba4cb7e data-v-ed7dc808 xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="feather feather-chevron-left icon text-icon-contrast text-undefined" viewBox="0 0 24 24"><path d="m14.25 18-6-6 6-6" /></svg>
+
+
+            {chapter &&
+                <div className={`w-full ${isSidebarOpen ? 'largepc:pl-[256px] ' : ' '} `} >
+
+                    <div>
+                        <div className="chapter-name text-lg text-white font-bold" >{chapter.name}</div>
+                        <Link
+                            href={`/titles/${chapter.manga.id}/i-am-a-max-level-priestess-in-another-world`}
+                            className="manga-name text-[--color-pink-purple] cursor-pointer"
+                        >
+                            {chapter.manga.name}
+                        </Link>
+                    </div>
+                    <div className="detailt-chapter flex justify-around gap-4 mt-2">
+                        <div className="w-1/3 h-7 bg-[--color-accent] rounded flex justify-center items-center">Ch. {chapter.chapterNumber}</div>
+                        <div className="w-1/3 h-7 bg-[--color-accent] rounded flex justify-center items-center">Pg. {currentPage} / {pages.length}</div>
+                        <div className="w-1/3 h-7 bg-[--color-accent] hover:bg-[--background-tags-hover] rounded flex justify-center items-center cursor-pointer" onClick={toggleSidebarRight}>Menu
+                            <svg data-v-9ba4cb7e data-v-ed7dc808 xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} className="feather feather-chevron-left icon text-icon-contrast text-undefined" viewBox="0 0 24 24"><path d="m14.25 18-6-6 6-6" /></svg>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+            }
+
             {/* <div className={`select-none ${isOpenSidebarRight ? 'pr-[309px] largepc:pr-0' : ''}`}> */}
-            <div className={`select-none w-full ${isSidebarOpen ? 'largepc:pl-[256px] ' : ''}
-                
-                `}>
+            <div className={`select-none w-full ${isSidebarOpen ? 'largepc:pl-[256px] ' : ''} `}>
 
 
 
                 {/*  đọc từ trên xuống dưới */}
-                <div className="list-pages flex flex-col items-center w-full mt-8 cursor-pointer">
+                {chapter && <>
+                    {currentDisplayStyles === 0 ? <LongStrip
+                        containerListPageRef={containerListPageRef}
+                        chapter={chapter}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        pageRefs={pageRefs}
+                        toggleSidebarRight={toggleSidebarRight}
+                        currentImageFit={currentImageFit}
+                        pages={pages}
+                        setFlagScroll={setFlagScroll}
 
-                    {!chapter ? <div>Loading...</div> :
-                        <>
-                            {/* Giới hạn chiều rộng của ảnh */}
-                            {chapter.pages.map((page, index) => {
-                                return (
-                                    //     //! Fit width DONE
-                                    // <div key={index} className="w-full h-auto relative">
-                                    //     <Image className="object-fill mt-1"
-                                    //         src={page.imageUrl}
-                                    //         alt="Picture"
-                                    //         // fill={true}
-                                    //         width={500}
-                                    //         height={500}
-                                    //         quality={100}
-                                    //         // layout="intrinsic"  // Giữ tỷ lệ ảnh tự động
-                                    //         layout="responsive"  // Tự động điều chỉnh kích thước theo vùng chứa
-                                    //     />
-                                    // </div>
-                                    //     //! Fit height DONE
-                                    //     //! w max contetnt của thẻ trong nó
-                                    <div key={index}
-                                        ref={(el) => (pageRefs.current[index] = el)} // Gán ref cho từng trang
-                                        className="relative h-[100vh] mt-1">
-                                        <div className="absolute top-0 left-0 right-0 flex h-full">
-                                            <div className="flex-1 h-full"
-                                                onClick={() => {
-                                                    if (currentPage == 1) {
-                                                        return;
-                                                    }
-                                                    setCurrentPage(currentPage - 1)
-                                                }}></div>
-                                            <div className="flex-1 h-full" onClick={toggleSidebarRight}></div>
-                                            <div className="flex-1 h-full"
-                                                onClick={() => {
-                                                    if (currentPage == pages.length) {
-                                                        return;
-                                                    }
-                                                    setCurrentPage(currentPage + 1)
-                                                }}
-                                            ></div>
-                                        </div>
-                                        <img className="w-auto h-full object-contain max-w-full" //! phải bỏ w-99vw đi để không giới hạn width
-                                            src={page.imageUrl}
-                                            alt="Picture" />
-                                    </div>
-                                    //     //! No limit DONE
+                    ></LongStrip> :
+                        currentDisplayStyles === 1 ? <WideStrip
+                            containerListPageRef={containerListPageRef}
+                            chapter={chapter}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            pageRefs={pageRefs}
+                            toggleSidebarRight={toggleSidebarRight}
+                            currentImageFit={currentImageFit}
+                            pages={pages}
+                            setFlagScroll={setFlagScroll}
 
-                                    // <div key={index} className="relative w-max h-max mt-1">
+                        /> : <SinglePage
+                            containerListPageRef={containerListPageRef}
+                            chapter={chapter}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            pageRefs={pageRefs}
+                            toggleSidebarRight={toggleSidebarRight}
+                            currentImageFit={currentImageFit}
+                            pages={pages}
+                            setFlagScroll={setFlagScroll}
 
-                                    //     <img className="w-auto h-full mt-1 object-contain max-w-full" //! phải bỏ w-99vw đi để không giới hạn width
-                                    //         src={page.imageUrl}
-                                    //         alt="Picture" />
-                                    // </div>
-                                    //     //! fit both DONE
-                                    // <div key={index} className="relative w-[100vw] h-max mt-1 flex flex-col items-center">
-
-                                    //     <img className="w-auto h-full mt-1 object-contain max-w-full" //! phải bỏ w-99vw đi để không giới hạn width
-                                    //         src={page.imageUrl}
-                                    //         alt="Picture" />
-                                    // </div>
-                                )
-                            })}
-                        </>
+                        />
                     }
-                </div>
+
+                </>
+
+                }
+
 
             </div>
 
@@ -237,7 +248,12 @@ export default function ChapterBody({ chapterId, pageNumber, setIsOpenSidebarRig
                                         style={{ width: `${(1 / pages.length) * 100}%` }}
                                         onMouseEnter={() => setHoverIndex(index)} // Khi hover vào item
                                         onMouseLeave={() => setHoverIndex(null)}  // Khi rời chuột khỏi item
-                                        onClick={() => setCurrentPage(index + 1)} // Khi click vào item
+                                        onClick={() => {
+                                            setFlagScroll(false);
+                                            setCurrentPage(index + 1); // Khi click vào item
+                                        }
+                                        }
+
                                     >
                                         {hoverIndex === index && ( // Hiển thị label chỉ khi hover đúng item
                                             <div className="divider-process-bar-item-label">
@@ -256,10 +272,22 @@ export default function ChapterBody({ chapterId, pageNumber, setIsOpenSidebarRig
 
 
             <SidebarRight pages={pages}
+                chapterName={chapter?.name}
+                mangaName={chapter?.manga?.name}
+                mangaId={chapter?.manga?.id}
                 isOpenSidebarRight={isOpenSidebarRight}
                 toggleSidebarRight={toggleSidebarRight}
                 currentPage={currentPage}
+                chapterList={chapterList}
+                currentChapter={currentChapter}
                 setCurrentPage={setCurrentPage}
+                currentDisplayStyles={currentDisplayStyles}
+                setCurrentDisplayStyles={setCurrentDisplayStyles}
+                currentImageFit={currentImageFit}
+                setCurrentImageFit={setCurrentImageFit}
+                currentProcessBarStyle={currentProcessBarStyle}
+                setCurrentProcessBarStyle={setCurrentProcessBarStyle}
+                setFlagScroll={setFlagScroll}
             />
         </>
     )

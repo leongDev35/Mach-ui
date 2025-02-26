@@ -30,7 +30,7 @@ export function useMangaApiPost() {
             return response.data;
 
         } catch (err) {
-            setError("loi");
+            setError(err.response.data.error);
         } finally {
             setLoading(false);
         }
@@ -48,8 +48,6 @@ export function useMangaApiGet() {
  
 
     const fetchMangaData = async () => {
-        console.log(jwtToken);
-
         if (!jwtToken) {
             setError("Token không hợp lệ!");
             return null;

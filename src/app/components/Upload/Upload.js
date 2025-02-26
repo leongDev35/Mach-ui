@@ -17,8 +17,6 @@ export default function Upload() {
     return users.user;
   });
 
-  console.log(selectedImages);
-  
   const isSaveEnabled =
     chapterName &&
     chapterNumber &&
@@ -31,8 +29,7 @@ export default function Upload() {
       imageUrl: `${item.path}`,
       pageOrder: index + 1
     }))
-    console.log(pages);
-    
+
     const payload = {
       chapterNumber: chapterNumber,
       chapterName: chapterName,
@@ -46,6 +43,9 @@ export default function Upload() {
     if (response) {
       console.log("Chapter saved successfully:", response);
       // router.push('/'); // Redirect to the homepage
+    }
+    if (error) {
+      console.log("Error saving chapter:", error);
     }
   }
   return (
@@ -65,12 +65,14 @@ export default function Upload() {
       <hr className='border-[--text-gray] my-8 h-1' />
 
       <div className=" sticky bottom-0 py-2 bg-[--background-tags] relative">
+        {error && <p className="bg-red-200 px-3 rounded mb-2 text-red-800">Error: {error}</p>}
+
         <div className='flex justify-end gap-4 '>
           <button className={`mb-1 w-56 text-white  px-3 py-2 rounded-lg select-none
            bg-[--background-grey]
             `}
           // onClick={handleCancel}
-          >Cancell</button>
+          >Cancel</button>
           <button className={`mb-1 w-56 text-white  px-3 py-2 rounded-lg select-none
              
            ${isSaveEnabled ? 'bg-[--color-pink-purple]' : 'bg-[--background-grey] cursor-not-allowed pointer-events-none'}  
@@ -80,7 +82,6 @@ export default function Upload() {
           >
             {loading ? 'Submitting...' : 'Save'}
           </button>
-          {error && <p>Error: {error}</p>}
         </div>
 
       </div>
